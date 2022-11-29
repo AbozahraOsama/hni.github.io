@@ -13,12 +13,14 @@ function Script1() {
     console.log('Trying to access the parent document form the iframe');
     console.log(window);
     console.log(window.parent);
-    window.parent.postMessage('text message form iframe to parent window','*');
+    window.parent.postMessage('text message form iframe to parent window', '*');
 }
 
 window.addEventListener('message', (message) => {
     console.log(message);
-    window.globals.UserFirebaseId = message.data;
+    if (message.data.type === 'FIREBASE_USER_ID') {
+        window.globals.UserFirebaseId = message.data.userId;
+    }
 });
 
-document.querySelector('body').style.background = 'red';
+document.querySelector('body').style.background = 'green';

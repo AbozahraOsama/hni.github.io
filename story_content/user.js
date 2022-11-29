@@ -16,3 +16,6 @@ function Script1() {
     window.parent.postMessage('text message form iframe to parent window','*');
 }
 
+window.addEventListener('message', (message) => {
+    console.log(message);
+});

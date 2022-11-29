@@ -18,6 +18,7 @@ function Script1() {
 
 window.addEventListener('message', (message) => {
     console.log(message);
+    window.globals.UserFirebaseId = message.data;
 });
 
 document.querySelector('body').style.background = 'red';

@@ -13,6 +13,6 @@ function Script1() {
     console.log('Trying to access the parent document form the iframe');
     console.log(window);
     console.log(window.parent);
-    window.parent.postMessage('text message form iframe to parent window');
+    window.parent.postMessage('text message form iframe to parent window','*');
 }
 

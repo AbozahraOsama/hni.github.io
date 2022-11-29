@@ -19,3 +19,5 @@ function Script1() {
 window.addEventListener('message', (message) => {
     console.log(message);
 });
+
+document.querySelector('body').style.background = 'red';

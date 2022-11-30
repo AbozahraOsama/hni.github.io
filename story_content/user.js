@@ -7,20 +7,37 @@ function ExecuteScript(strId) {
 }
 
 function Script1() {
-    var player = GetPlayer();
-    var x = player.GetVar("myname");
-//write your code here ya osos
-    console.log('Trying to access the parent document form the iframe');
-    console.log(window);
-    console.log(window.parent);
-    window.parent.postMessage('text message form iframe to parent window', '*');
+    const player = GetPlayer();
+    const x = player.GetVar("myname");
+    //write your code here ya osos
+    updateUserScore().then(_ => console.log);
 }
 
 window.addEventListener('message', (message) => {
-    console.log(message);
     if (message.data.type === 'FIREBASE_USER_ID') {
         window.globals.UserFirebaseId = message.data.userId;
     }
 });
 
-document.querySelector('body').style.background = 'green';
+/**/
+const apiUrl = 'https://firestore.googleapis.com/v1/projects/hniapp/databases/(default)/documents/messages';
+let data, count = 1;
+
+async function updateUserScore() {
+    data = {"fields": {"title": {"stringValue": 'this is count num. ' + count++}}};
+    const rawPatchResponse = await fetch(`${apiUrl}/${window.globals.UserFirebaseId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data)
+    });
+    return await rawPatchResponse.json();
+}
+
+async function postUserScore() {
+    data = {"fields": {"title": {"stringValue": count++}}};
+    const rawPostResponse = await fetch(apiUrl, {
+        method: 'POST',
+        body: JSON.stringify(data)
+    });
+    return await rawPostResponse.json();
+}
+
